@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos - Pricely</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">PRICELY</a>
+            <ul class="nav-links">
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="listas.html">Mis Listas</a></li>
+                <li id="auth-links">
+                    <a href="login.html" class="btn-outline">Login</a>
+                    <a href="register.html" class="btn-primary">Registrar</a>
+                </li>
+                <li id="user-info" style="display: none;">
+                    <span id="user-name"></span>
+                    <button id="logout-btn" class="btn-outline">Cerrar Sesión</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1>Productos</h1>
+        <input type="text" id="search-input" placeholder="Buscar productos..." class="input" style="margin-bottom: 20px;">
+        <div id="productos-container" class="productos-grid">
+            <div class="loading">Cargando productos...</div>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        let productos = [];
+        
+        async function cargarProductos(search = '') {
+            const container = document.getElementById('productos-container');
+            container.innerHTML = '<div class="loading">Cargando productos...</div>';
+            
+            try {
+                let url = '/productos';
+                if (search) url += `?busqueda=${encodeURIComponent(search)}`;
+                const data = await api.get(url);
+                productos = data || [];
+                renderProductos();
+            } catch (err) {
+                container.innerHTML = '<div class="loading">Error al cargar productos</div>';
+            }
+        }
+        
+        function renderProductos() {
+            const container = document.getElementById('productos-container');
+            
+            if (productos.length === 0) {
+                container.innerHTML = '<div class="loading">No se encontraron productos</div>';
+                return;
+            }
+            
+            container.innerHTML = productos.map(p => `
+                <div class="producto-card" onclick="verProducto(${p.id_producto})">
+                    <div class="producto-info">
+                        <h3>${p.nombre}</h3>
+                        <p class="marca">${p.marca || 'General'}</p>
+                        <p class="precio">$${p.precio_minimo?.toFixed(2) || '0'}</p>
+                        ${p.en_oferta ? '<span class="oferta-badge">OFERTA</span>' : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function verProducto(id) {
+            window.location.href = `producto.html?id=${id}`;
+        }
+        
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            cargarProductos(e.target.value);
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarProductos();
+        });
+    </script>
+</body>
+</html>

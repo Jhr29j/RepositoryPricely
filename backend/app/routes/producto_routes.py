@@ -11,41 +11,28 @@ router = APIRouter(prefix="/productos", tags=["Productos"])
 def get_all_productos(
     skip: int = Query(0, ge=0),
     limit: int = Query(100, ge=1, le=1000),
+    busqueda: Optional[str] = Query(None, alias="q"),
     search: Optional[str] = None,
     categoria: Optional[int] = None,
     marca: Optional[int] = None,
+    supermercado: Optional[str] = None,
+    solo_ofertas: bool = False,
     db: Session = Depends(get_db)
 ):
     """Obtener todos los productos con filtros opcionales"""
-    if search:
-        productos = ProductoService.search_productos(db, search)
-    elif categoria:
-        productos = ProductoService.get_productos_by_categoria(db, categoria)
-    elif marca:
-        productos = ProductoService.get_productos_by_marca(db, marca)
-    else:
-        productos = ProductoService.get_all_productos(db, skip, limit)
-    return productos
-
-@router.get("/", response_model=List[ProductoOut])
-def get_all_productos(
-    skip: int = Query(0, ge=0),
-    limit: int = Query(100, ge=1, le=1000),
-    search: Optional[str] = None,
-    categoria: Optional[int] = None,
-    marca: Optional[int] = None,
-    db: Session = Depends(get_db)
-):
-    """Obtener todos los productos con filtros opcionales"""
-    if search:
-        productos = ProductoService.search_productos(db, search)
-    elif categoria:
-        productos = ProductoService.get_productos_by_categoria(db, categoria)
-    elif marca:
-        productos = ProductoService.get_productos_by_marca(db, marca)
-    else:
-        productos = ProductoService.get_all_productos(db, skip, limit)
-    return productos
+    # Usamos busqueda o search indistintamente
+    search_term = busqueda or search
+    
+    return ProductoService.get_all_productos_paginated(
+        db, 
+        skip=skip, 
+        limit=limit, 
+        search=search_term, 
+        categoria=categoria, 
+        marca=marca,
+        supermercado=supermercado,
+        solo_ofertas=solo_ofertas
+    )
 
 @router.post("/", response_model=ProductoOut, status_code=status.HTTP_201_CREATED)
 def create_producto(producto_data: ProductoCreate, db: Session = Depends(get_db)):

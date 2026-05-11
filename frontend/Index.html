@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricely - Comparador de Precios</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">PRICELY</a>
+            <ul class="nav-links">
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="listas.html">Mis Listas</a></li>
+                <li id="auth-links">
+                    <a href="login.html" class="btn-outline">Login</a>
+                    <a href="register.html" class="btn-primary">Registrar</a>
+                </li>
+                <li id="user-info" style="display: none;">
+                    <span id="user-name"></span>
+                    <button id="logout-btn" class="btn-outline">Cerrar Sesión</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Pricely</h1>
+                <p>Compara precios de productos en los supermercados de República Dominicana</p>
+                <a href="productos.html" class="btn-primary">Ver Productos</a>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">💰</div>
+                        <h3>Compara Precios</h3>
+                        <p>Encuentra el mejor precio en todos los supermercados</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📝</div>
+                        <h3>Listas de Compra</h3>
+                        <p>Crea y guarda tus listas para ahorrar tiempo</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🏷️</div>
+                        <h3>Ofertas</h3>
+                        <p>Descubre los productos en oferta</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
