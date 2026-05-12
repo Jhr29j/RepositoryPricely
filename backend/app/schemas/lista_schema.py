@@ -3,32 +3,33 @@ from datetime import datetime
 from typing import Optional, List
 
 class DetalleListaBase(BaseModel):
-    ID_PRODUCTO: int
-    CANTIDAD: int
-    PRECIO_UNITARIO: float
+    id_producto: int
+    cantidad: int
+    precio_unitario: float
 
 class DetalleListaCreate(DetalleListaBase):
     pass
 
 class DetalleListaOut(DetalleListaBase):
-    ID_DETALLE: int
-    SUBTOTAL: float
+    id_detalle: int
+    subtotal: float
+    nombre_producto: Optional[str] = None
     
     class Config:
         from_attributes = True
 
 class ListaBase(BaseModel):
-    NOMBRE: str
+    nombre: str
 
 class ListaCreate(ListaBase):
     pass
 
 class ListaOut(ListaBase):
-    ID_LISTA: int
-    ID_USUARIO: int
-    FECHA_CREACION: datetime
-    detalles: List[DetalleListaOut] = []
-    TOTAL: Optional[float] = None
+    id_lista: int
+    id_usuario: int
+    fecha_creacion: datetime
+    items: List[DetalleListaOut] = []
+    total: Optional[float] = None
     
     class Config:
         from_attributes = True

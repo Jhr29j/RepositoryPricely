@@ -18,24 +18,30 @@ class AuthService:
     @staticmethod
     def register_user(db: Session, user_data: UsuarioCreate):
         # Verificar si el usuario ya existe
-        existing_user = AuthService.get_usuario_by_correo(db, user_data.CORREO)
+        existing_user = AuthService.get_usuario_by_correo(db, user_data.correo)
         if existing_user:
             return None, "El correo ya está registrado"
         
         # Crear nuevo usuario
-        hashed_password = get_password_hash(user_data.CONTRASENA)
+        hashed_password = get_password_hash(user_data.contrasena)
         new_user = Usuario(
-            NOMBRE=user_data.NOMBRE,
-            CORREO=user_data.CORREO,
+            NOMBRE=user_data.nombre,
+            CORREO=user_data.correo,
             PASSWORD_HASH=hashed_password,
-            ID_ROL=user_data.ID_ROL
+            ID_ROL=user_data.id_rol
         )
         
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
         
-        return new_user, "Usuario registrado exitosamente"
+        return {
+            "id_usuario": new_user.ID_USUARIO,
+            "nombre": new_user.NOMBRE,
+            "correo": new_user.CORREO,
+            "id_rol": new_user.ID_ROL,
+            "fecha_creacion": new_user.FECHA_CREACION
+        }, "Usuario registrado exitosamente"
     
     @staticmethod
     def login_user(db: Session, correo: str, contrasena: str):
@@ -61,9 +67,9 @@ class AuthService:
             "access_token": access_token,
             "token_type": "bearer",
             "usuario": {
-                "ID_USUARIO": usuario.ID_USUARIO,
-                "NOMBRE": usuario.NOMBRE,
-                "CORREO": usuario.CORREO,
-                "ROL": rol_nombre
+                "id_usuario": usuario.ID_USUARIO,
+                "nombre": usuario.NOMBRE,
+                "correo": usuario.CORREO,
+                "rol": rol_nombre
             }
         }, "Login exitoso"

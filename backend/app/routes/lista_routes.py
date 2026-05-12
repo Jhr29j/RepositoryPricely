@@ -17,7 +17,7 @@ def get_user_listas(db: Session = Depends(get_db)):
     listas = ListaService.get_listas_by_usuario(db, FIXED_USER_ID)
     return listas
 
-@router.get("/{id_lista}")
+@router.get("/{id_lista}", response_model=ListaOut)
 def get_lista_details(id_lista: int, db: Session = Depends(get_db)):
     """Obtener detalles de una lista con productos y total"""
     result = ListaService.get_lista_with_details(db, id_lista)

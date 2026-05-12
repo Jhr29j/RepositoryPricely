@@ -4,6 +4,7 @@ import type { Producto, Lista } from '@/types'
 import { listaService } from '@/services/listaService'
 import { useAuthStore } from '@/store/authStore'
 import { useRouter } from 'next/navigation'
+import '@/styles/Layout.css'
 
 // ── Toast Context ──────────────────────────────────────────────────────────
 interface ToastCtx { showToast: (msg: string, type?: 'ok' | 'err') => void }

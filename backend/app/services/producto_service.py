@@ -1,5 +1,5 @@
-from sqlalchemy.orm import Session
 from sqlalchemy import and_
+from sqlalchemy.orm import Session, joinedload
 from app.models.producto import Producto
 from app.models.marca import Marca
 from app.models.categoria import Categoria
@@ -8,7 +8,7 @@ from app.schemas.producto_schema import ProductoCreate, ProductoUpdate
 class ProductoService:
     
     @staticmethod
-    def get_all_productos(db: Session, skip: int = 0, limit: int = 100):
+    def get_all_productos(db: Session, skip: int = 0, limit: int = 1000):
         # Agregamos order_by para SQL Server
         return db.query(Producto).order_by(Producto.ID_PRODUCTO).offset(skip).limit(limit).all()
 
@@ -16,7 +16,7 @@ class ProductoService:
     def get_all_productos_paginated(
         db: Session, 
         skip: int = 0, 
-        limit: int = 100, 
+        limit: int = 1000, 
         search: str = None, 
         categoria: int = None, 
         marca: int = None,
@@ -27,7 +27,10 @@ class ProductoService:
         from app.models.supermercado import Supermercado
         from sqlalchemy import func
 
-        query = db.query(Producto)
+        query = db.query(Producto).options(
+            joinedload(Producto.marca),
+            joinedload(Producto.categoria)
+        )
         
         # Filtros básicos
         if search:
@@ -39,51 +42,61 @@ class ProductoService:
             
         # Filtro por supermercado (requiere join)
         if supermercado:
-            query = query.join(PrecioProducto).join(Supermercado).filter(Supermercado.NOMBRE == supermercado)
+            query = query.join(PrecioProducto).join(Supermercado).filter(
+                func.lower(Supermercado.NOMBRE) == func.lower(supermercado)
+            )
             
-        # Filtro por ofertas (si existiera columna, por ahora lo dejamos como stub)
+        # Filtro por ofertas
         if solo_ofertas:
-            # query = query.filter(PrecioProducto.EN_OFERTA == True)
-            pass
+            # En SQL Server, podemos buscar donde el precio sea menor al promedio o tenga bandera específica
+            # Por ahora filtramos si tiene al menos un precio
+            query = query.filter(Producto.precios.any())
 
         productos = query.order_by(Producto.ID_PRODUCTO).offset(skip).limit(limit).all()
+        producto_ids = [p.ID_PRODUCTO for p in productos]
         
-        # Enriquecer productos con precios y metadatos
+        # Pre-cargar todos los precios de los productos seleccionados en una sola query (Optimización N+1)
+        all_precios_db = db.query(PrecioProducto, Supermercado.NOMBRE.label("SUPERMERCADO_NOMBRE"))\
+            .join(Supermercado, PrecioProducto.ID_SUPERMERCADO == Supermercado.ID_SUPERMERCADO)\
+            .filter(PrecioProducto.ID_PRODUCTO.in_(producto_ids)).all()
+            
+        # Agrupar precios por ID_PRODUCTO
+        precios_by_prod = {}
+        for pr, super_nombre in all_precios_db:
+            if pr.ID_PRODUCTO not in precios_by_prod:
+                precios_by_prod[pr.ID_PRODUCTO] = []
+            precios_by_prod[pr.ID_PRODUCTO].append((pr, super_nombre))
+
+        # Construir el resultado final
         result = []
         for p in productos:
-            # Obtener precios para este producto
-            precios_db = db.query(PrecioProducto, Supermercado.NOMBRE.label("SUPERMERCADO_NOMBRE"))\
-                .join(Supermercado, PrecioProducto.ID_SUPERMERCADO == Supermercado.ID_SUPERMERCADO)\
-                .filter(PrecioProducto.ID_PRODUCTO == p.ID_PRODUCTO).all()
-            
             precios_list = []
             min_p = float('inf')
             has_offer = False
             
-            for pr, super_nombre in precios_db:
+            # Obtener precios del mapa (mucho más rápido que query individual)
+            prod_precios = precios_by_prod.get(p.ID_PRODUCTO, [])
+            
+            for pr, super_nombre in prod_precios:
                 val = float(pr.PRECIO)
                 if val < min_p: min_p = val
-                
-                # Mock de oferta (si precio < 500 por ejemplo, o simplemente False)
-                # has_offer = has_offer or getattr(pr, 'EN_OFERTA', False)
                 
                 precios_list.append({
                     "id_precio": pr.ID_PRECIO,
                     "precio": val,
-                    "precio_oferta": None, #getattr(pr, 'PRECIO_OFERTA', None),
-                    "en_oferta": False, #getattr(pr, 'EN_OFERTA', False),
+                    "precio_oferta": None,
+                    "en_oferta": False,
                     "supermercado": super_nombre
                 })
             
             if min_p == float('inf'): min_p = 0.0
             
-            # Crear objeto compatible con ProductoOut
             p_out = {
-                "ID_PRODUCTO": p.ID_PRODUCTO,
-                "NOMBRE": p.NOMBRE,
-                "ID_MARCA": p.ID_MARCA,
-                "ID_CATEGORIA": p.ID_CATEGORIA,
-                "IMAGEN_URL": p.IMAGEN_URL,
+                "id_producto": p.ID_PRODUCTO,
+                "nombre": p.NOMBRE,
+                "id_marca": p.ID_MARCA,
+                "id_categoria": p.ID_CATEGORIA,
+                "imagen_url": p.IMAGEN_URL,
                 "marca": p.marca.NOMBRE if p.marca else "General",
                 "categoria": p.categoria.NOMBRE if p.categoria else "General",
                 "precios": precios_list,

@@ -10,7 +10,7 @@ router = APIRouter(prefix="/productos", tags=["Productos"])
 @router.get("/", response_model=List[ProductoOut])
 def get_all_productos(
     skip: int = Query(0, ge=0),
-    limit: int = Query(100, ge=1, le=1000),
+    limit: int = Query(1000, ge=1, le=2000),
     busqueda: Optional[str] = Query(None, alias="q"),
     search: Optional[str] = None,
     categoria: Optional[int] = None,

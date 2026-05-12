@@ -3,21 +3,21 @@ from datetime import datetime
 from typing import Optional
 
 class PrecioBase(BaseModel):
-    ID_PRODUCTO: int
-    ID_SUPERMERCADO: int
-    PRECIO: float
+    id_producto: int
+    id_supermercado: int
+    precio: float
 
 class PrecioCreate(PrecioBase):
     pass
 
 class PrecioOut(PrecioBase):
-    ID_PRECIO: int
-    FECHA_ACTUALIZACION: datetime
-    NOMBRE_PRODUCTO: Optional[str] = None
-    NOMBRE_SUPERMERCADO: Optional[str] = None
+    id_precio: int
+    fecha_actualizacion: datetime
+    nombre_producto: Optional[str] = None
+    nombre_supermercado: Optional[str] = None
     
     class Config:
         from_attributes = True
 
 class PrecioUpdate(BaseModel):
-    PRECIO: float
+    precio: float

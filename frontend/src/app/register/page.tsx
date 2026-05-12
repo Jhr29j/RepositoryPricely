@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/store/authStore'
 import { authService } from '@/services/authService'
+import '@/styles/Auth.css'
 
 export default function RegisterPage() {
   const router      = useRouter()
@@ -40,60 +41,89 @@ export default function RegisterPage() {
     }
   }
 
-  const field = (key: keyof typeof form, label: string, type = 'text', placeholder = '') => (
-    <div>
-      <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5"
-             style={{ color: 'var(--gray-500)' }}>
-        {label}
-      </label>
-      <input
-        type={type}
-        placeholder={placeholder}
-        value={form[key]}
-        onChange={(e) => setForm(f => ({ ...f, [key]: e.target.value }))}
-        onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
-        className="input-base"
-      />
-    </div>
-  )
-
   return (
-    <div className="min-h-[calc(100vh-62px)] flex items-center justify-center p-6"
-         style={{ background: 'var(--gray-100)' }}>
-      <div className="bg-white rounded-2xl p-8 w-full max-w-sm shadow-lg border animate-fade-up"
-           style={{ borderColor: 'var(--gray-200)' }}>
+    <div className="auth-container">
+      <div className="auth-card animate-fade-up">
+        
+        <div className="auth-header">
+          <div className="auth-icon-wrap">✨</div>
+          <h1 className="auth-title">Crear Cuenta</h1>
+          <p className="auth-subtitle">Únete a la comunidad Pricely</p>
+        </div>
 
-        <h1 className="font-display text-2xl font-bold text-center mb-6"
-            style={{ color: 'var(--crimson-dark)' }}>
-          Regístrate
-        </h1>
+        <div className="space-y-4">
+          <div className="form-group">
+            <label className="form-label">Nombre completo</label>
+            <input
+              type="text"
+              placeholder="Juan Pérez"
+              value={form.nombre}
+              onChange={(e) => setForm(f => ({ ...f, nombre: e.target.value }))}
+              onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+              className="form-input"
+            />
+          </div>
 
-        <div className="flex flex-col gap-4">
-          {field('nombre',  'Nombre completo', 'text',     'Juan Pérez')}
-          {field('correo',  'Correo electrónico', 'email', 'correo@ejemplo.com')}
-          {field('password', 'Contraseña', 'password',    '••••••••')}
-          {field('confirm',  'Confirmar contraseña', 'password', '••••••••')}
+          <div className="form-group">
+            <label className="form-label">Correo electrónico</label>
+            <input
+              type="email"
+              placeholder="tu@correo.com"
+              value={form.correo}
+              onChange={(e) => setForm(f => ({ ...f, correo: e.target.value }))}
+              onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+              className="form-input"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="form-group">
+              <label className="form-label">Contraseña</label>
+              <input
+                type="password"
+                placeholder="••••••••"
+                value={form.password}
+                onChange={(e) => setForm(f => ({ ...f, password: e.target.value }))}
+                onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+                className="form-input"
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Confirmar</label>
+              <input
+                type="password"
+                placeholder="••••••••"
+                value={form.confirm}
+                onChange={(e) => setForm(f => ({ ...f, confirm: e.target.value }))}
+                onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+                className="form-input"
+              />
+            </div>
+          </div>
 
           {error && (
-            <p className="text-sm text-center font-medium animate-fade-in" style={{ color: '#E74C3C' }}>
-              {error}
-            </p>
+            <div className="p-3 rounded-xl bg-red-50 border border-red-100 animate-shake">
+              <p className="text-xs text-center font-bold uppercase tracking-tight" style={{ color: '#E74C3C' }}>
+                {error}
+              </p>
+            </div>
           )}
 
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className="btn-primary w-full py-3 rounded-xl text-sm mt-1 disabled:opacity-60">
-            {loading ? 'Registrando...' : 'Registrarse'}
+            className="auth-btn"
+          >
+            {loading ? 'Registrando...' : 'Registrarme'}
           </button>
         </div>
 
-        <p className="text-center text-sm mt-5" style={{ color: 'var(--gray-500)' }}>
-          ¿Ya tienes cuenta?{' '}
-          <Link href="/login" className="font-semibold hover:underline" style={{ color: 'var(--crimson)' }}>
-            Inicia sesión
-          </Link>
-        </p>
+        <div className="auth-footer">
+          <p>
+            ¿Ya tienes cuenta?{' '}
+            <Link href="/login">Inicia Sesión</Link>
+          </p>
+        </div>
       </div>
     </div>
   )

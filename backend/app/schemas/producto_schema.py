@@ -2,10 +2,10 @@ from pydantic import BaseModel
 from typing import Optional, List
 
 class ProductoBase(BaseModel):
-    NOMBRE: str
-    ID_MARCA: int
-    ID_CATEGORIA: int
-    IMAGEN_URL: Optional[str] = None
+    nombre: str
+    id_marca: int
+    id_categoria: int
+    imagen_url: Optional[str] = None
 
 class ProductoCreate(ProductoBase):
     pass
@@ -21,7 +21,7 @@ class PrecioSimpleOut(BaseModel):
         from_attributes = True
 
 class ProductoOut(ProductoBase):
-    ID_PRODUCTO: int
+    id_producto: int
     precios: List[PrecioSimpleOut] = []
     en_oferta: bool = False
     precio_minimo: float = 0.0
@@ -32,7 +32,7 @@ class ProductoOut(ProductoBase):
         from_attributes = True
 
 class ProductoUpdate(BaseModel):
-    NOMBRE: Optional[str] = None
-    ID_MARCA: Optional[int] = None
-    ID_CATEGORIA: Optional[int] = None
-    IMAGEN_URL: Optional[str] = None
+    nombre: Optional[str] = None
+    id_marca: Optional[int] = None
+    id_categoria: Optional[int] = None
+    imagen_url: Optional[str] = None
