@@ -1,5 +1,8 @@
 'use client'
+<<<<<<< HEAD
 
+=======
+>>>>>>> 16f9a44557d6a86548e826da06e654ecf651cd3e
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import ProductCard from '@/components/ProductCard'
@@ -12,11 +15,20 @@ import type { Producto } from '@/types'
 const SUPERMERCADOS = ['La Sirena', 'El Nacional', 'Jumbo', 'Bravo', 'Olé']
 
 export default function HomePage() {
+<<<<<<< HEAD
   const { openModal } = useModal()
 
   const [productos, setProductos] = useState<Producto[]>([])
   const [ofertas, setOfertas] = useState<Producto[]>([])
   const [loading, setLoading] = useState(true)
+=======
+  const { openModal }  = useModal()
+  const [productos, setProductos]   = useState<Producto[]>([])
+  const [ofertas,   setOfertas]     = useState<Producto[]>([])
+  const [loading,   setLoading]     = useState(true)
+  const [busqueda,  setBusqueda]    = useState('')
+  const router = typeof window !== 'undefined' ? null : null
+>>>>>>> 16f9a44557d6a86548e826da06e654ecf651cd3e
 
   useEffect(() => {
     Promise.all([
@@ -27,6 +39,7 @@ export default function HomePage() {
         setProductos(all.slice(0, 4))
         setOfertas(ofs.slice(0, 4))
       })
+<<<<<<< HEAD
       .catch(() => {
         // 🔥 MOCK DATA SI FALLA LA API
         const mockProductos: Producto[] = [
@@ -83,10 +96,23 @@ export default function HomePage() {
       .finally(() => setLoading(false))
   }, [])
 
+=======
+      .catch(() => {})
+      .finally(() => setLoading(false))
+  }, [])
+
+  const handleBuscar = () => {
+    if (busqueda.trim()) {
+      window.location.href = `/productos?q=${encodeURIComponent(busqueda)}`
+    }
+  }
+
+>>>>>>> 16f9a44557d6a86548e826da06e654ecf651cd3e
   return (
     <div>
       {/* ── HERO ── */}
       <section className="hero">
+<<<<<<< HEAD
         <div className="hero-bg-glow" />
         <div className="hero-bg-glow secondary" />
 
@@ -144,6 +170,30 @@ export default function HomePage() {
                 href={`/productos?supermercado=${encodeURIComponent(s)}`}
                 className="super-badge"
               >
+=======
+        <div className="max-w-4xl mx-auto">
+          <h1>Compara precios en RD</h1>
+          <p>
+            Ahorra en cada compra comparando precios en los principales supermercados del país.
+          </p>
+
+          {/* Search bar */}
+          <div className="hero-search">
+            <input
+              type="text"
+              placeholder="¿Qué producto buscas hoy?"
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleBuscar()}
+            />
+            <button onClick={handleBuscar}>Buscar</button>
+          </div>
+
+          {/* Featured supermarkets */}
+          <div className="super-badges">
+            {SUPERMERCADOS.map((s) => (
+              <Link key={s} href={`/productos?supermercado=${encodeURIComponent(s)}`} className="super-badge">
+>>>>>>> 16f9a44557d6a86548e826da06e654ecf651cd3e
                 {s}
               </Link>
             ))}
@@ -155,10 +205,14 @@ export default function HomePage() {
       <section className="section">
         <div className="section-header">
           <h2 className="section-title">Productos más Listados</h2>
+<<<<<<< HEAD
 
           <Link href="/productos" className="see-all">
             Ver todos →
           </Link>
+=======
+          <Link href="/productos" className="see-all">Ver todos →</Link>
+>>>>>>> 16f9a44557d6a86548e826da06e654ecf651cd3e
         </div>
 
         {loading ? (
@@ -170,10 +224,14 @@ export default function HomePage() {
         ) : productos.length > 0 ? (
           <div className="products-grid">
             {productos.map((p, i) => (
+<<<<<<< HEAD
               <div
                 key={p.id_producto}
                 className={`animate-fade-up stagger-${i + 1}`}
               >
+=======
+              <div key={p.id_producto} className={`animate-fade-up stagger-${i + 1}`}>
+>>>>>>> 16f9a44557d6a86548e826da06e654ecf651cd3e
                 <ProductCard producto={p} onAgregar={openModal} />
               </div>
             ))}
@@ -191,25 +249,37 @@ export default function HomePage() {
         <section className="section">
           <div className="section-header">
             <h2 className="section-title">Ofertas Destacadas</h2>
+<<<<<<< HEAD
 
             <Link href="/productos?ofertas=true" className="see-all">
               Ver todas →
             </Link>
+=======
+            <Link href="/productos?ofertas=true" className="see-all">Ver todas →</Link>
+>>>>>>> 16f9a44557d6a86548e826da06e654ecf651cd3e
           </div>
 
           {loading ? (
             <div className="products-grid">
+<<<<<<< HEAD
               {[...Array(4)].map((_, i) => (
                 <div key={i} className="skeleton h-64 rounded-[14px]" />
               ))}
+=======
+              {[...Array(4)].map((_, i) => <div key={i} className="skeleton h-64 rounded-[14px]" />)}
+>>>>>>> 16f9a44557d6a86548e826da06e654ecf651cd3e
             </div>
           ) : (
             <div className="products-grid">
               {ofertas.map((p, i) => (
+<<<<<<< HEAD
                 <div
                   key={p.id_producto}
                   className={`animate-fade-up stagger-${i + 1}`}
                 >
+=======
+                <div key={p.id_producto} className={`animate-fade-up stagger-${i + 1}`}>
+>>>>>>> 16f9a44557d6a86548e826da06e654ecf651cd3e
                   <ProductCard producto={p} onAgregar={openModal} />
                 </div>
               ))}
@@ -222,6 +292,7 @@ export default function HomePage() {
       <section className="features">
         <div className="features-grid">
           {[
+<<<<<<< HEAD
             {
               icon: '💰',
               title: 'Compara Precios',
@@ -243,6 +314,15 @@ export default function HomePage() {
 
               <h3 className="feature-title">{f.title}</h3>
 
+=======
+            { icon: '💰', title: 'Compara Precios', desc: 'Encuentra el mejor precio en todos los supermercados' },
+            { icon: '📋', title: 'Listas de Compra', desc: 'Crea y guarda tus listas para ahorrar tiempo' },
+            { icon: '🏷️', title: 'Ofertas',          desc: 'Descubre los productos en oferta' },
+          ].map((f) => (
+            <div key={f.title} className="feature-card">
+              <div className="feature-icon">{f.icon}</div>
+              <h3 className="feature-title">{f.title}</h3>
+>>>>>>> 16f9a44557d6a86548e826da06e654ecf651cd3e
               <p className="feature-desc">{f.desc}</p>
             </div>
           ))}

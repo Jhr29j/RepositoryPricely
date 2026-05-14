@@ -1,7 +1,10 @@
 /* ── Elite Navbar ── */
 .navbar {
   position: sticky;
+<<<<<<< HEAD
   height: 80px;
+=======
+>>>>>>> 16f9a44557d6a86548e826da06e654ecf651cd3e
   top: 0;
   left: 0;
   right: 0;
@@ -10,7 +13,11 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.2rem 4rem;
+<<<<<<< HEAD
   background: rgba(66, 10, 10, 0.9);
+=======
+  background: rgba(139, 0, 0, 0.9);
+>>>>>>> 16f9a44557d6a86548e826da06e654ecf651cd3e
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -149,5 +156,9 @@
 
 .nav-dropdown .sep { height: 1px; background: var(--gray-100); }
 
+<<<<<<< HEAD
 .nav-dropdown .danger { color: #5D0E0E; }
+=======
+.nav-dropdown .danger { color: #8B0000; }
+>>>>>>> 16f9a44557d6a86548e826da06e654ecf651cd3e
 .nav-dropdown .danger:hover { background: #8B000010; }

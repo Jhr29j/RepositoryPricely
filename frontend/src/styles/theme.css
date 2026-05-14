@@ -2,12 +2,21 @@
 
 :root {
   /* Premium Palette */
+<<<<<<< HEAD
   --crimson: #5D0E0E;
   --crimson-dark: #5D0E0E;
   --crimson-bright: #5D0E0E;
   --crimson-soft: rgb(112, 28, 19);
   --gold: #ffffff;
   --gold-vibrant: #ffffff;
+=======
+  --crimson: #C0392B;
+  --crimson-dark: #8B0000;
+  --crimson-bright: #E74C3C;
+  --crimson-soft: rgba(192, 57, 43, 0.1);
+  --gold: #D4AF37;
+  --gold-vibrant: #FFD700;
+>>>>>>> 16f9a44557d6a86548e826da06e654ecf651cd3e
   --gold-soft: rgba(212, 175, 55, 0.15);
   
   --gray-50: #f9fafb;
