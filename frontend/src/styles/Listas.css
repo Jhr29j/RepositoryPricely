@@ -1,0 +1,131 @@
+/* ── Listas Page ── */
+.listas-page {
+  background-color: var(--gray-50);
+  min-height: 100vh;
+}
+
+.listas-header {
+  background: linear-gradient(135deg, var(--crimson-dark), var(--crimson));
+  padding: 6rem 2rem;
+  text-align: center;
+  color: #fff;
+  border-bottom: 4px solid var(--gold);
+  margin-bottom: 3rem;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.listas-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 900;
+  margin-bottom: 2rem;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.listas-body {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem 6rem;
+}
+
+.lista-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+}
+
+.lista-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--crimson-soft);
+}
+
+.lista-card-header {
+  background: var(--gray-50);
+  padding: 1.5rem 2.5rem;
+  border-bottom: 1px solid var(--gray-100);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lista-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--crimson-dark);
+}
+
+.lista-product-card {
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  border: 1px solid var(--gray-100);
+  transition: all 0.3s;
+  text-align: center;
+  position: relative;
+}
+
+.lista-product-card:hover {
+  background: #fff;
+  border-color: var(--crimson-light);
+  box-shadow: var(--shadow-sm);
+}
+
+.lista-product-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gray-800);
+  margin-bottom: 0.5rem;
+}
+
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.qty-btn {
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  border: 1px solid var(--gray-200);
+  background: #fff;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.qty-btn:hover { border-color: var(--crimson); color: var(--crimson); }
+
+.lista-product-price {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--crimson);
+}
+
+.lista-total {
+  background: linear-gradient(to right, var(--gray-50), #fff);
+  padding: 1.5rem 2.5rem;
+  border-top: 1px solid var(--gray-100);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.lista-remove {
+  background: none;
+  border: none;
+  color: #E74C3C;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: all 0.3s;
+  font-size: 1.1rem;
+}
+
+.lista-remove:hover { opacity: 1; transform: scale(1.2); }

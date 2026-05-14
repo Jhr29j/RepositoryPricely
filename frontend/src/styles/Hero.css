@@ -1,0 +1,493 @@
+/* ───────────────── HERO PREMIUM ESTILO PRICELY ───────────────── */
+
+.hero {
+  position: relative;
+
+  min-height: 100vh;
+
+  overflow: hidden;
+
+  padding: 7rem 2rem 5rem;
+
+  background:
+    radial-gradient(circle at top left, rgba(139,0,0,.06), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(220,38,38,.07), transparent 35%),
+    linear-gradient(
+      180deg,
+      #f7f3f3 0%,
+      #f2eeee 100%
+    );
+}
+
+/* ───────────────── GLOWS ───────────────── */
+
+.hero-bg-glow {
+  position: absolute;
+
+  width: 520px;
+  height: 520px;
+
+  border-radius: 9999px;
+
+  background: rgba(139,0,0,.08);
+
+  filter: blur(120px);
+
+  top: -220px;
+  left: -180px;
+
+  animation: floatGlow 10s ease-in-out infinite;
+}
+
+.hero-bg-glow.secondary {
+  right: -180px;
+  left: auto;
+
+  bottom: -220px;
+  top: auto;
+
+  background: rgba(220,38,38,.08);
+
+  animation-delay: 2s;
+}
+
+/* ───────────────── CONTENT ───────────────── */
+
+.hero-content {
+  position: relative;
+  z-index: 5;
+
+  max-width: 1380px;
+
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+}
+
+/* ───────────────── BADGE ───────────────── */
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+
+  padding: .9rem 1.5rem;
+
+  border-radius: 999px;
+
+  background: rgba(255,255,255,.92);
+
+  border: 1px solid rgba(139,0,0,.08);
+
+  backdrop-filter: blur(18px);
+
+  color: #5D0E0E;
+
+  font-size: .92rem;
+  font-weight: 800;
+
+  margin-bottom: 2rem;
+
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.05);
+
+  animation:
+    fadeUp 1s cubic-bezier(.2,.8,.2,1) both;
+}
+
+/* ───────────────── TITULO ───────────────── */
+
+.hero-title {
+  max-width: 1200px;
+
+  font-size: clamp(4rem, 9vw, 7rem);
+
+  line-height: .88;
+
+  letter-spacing: -.08em;
+
+  font-weight: 950;
+
+  color: #111827;
+
+  margin-bottom: 2rem;
+
+  animation:
+    fadeUp 1s .15s cubic-bezier(.2,.8,.2,1) both;
+}
+
+/* TEXTO ROJO */
+
+.hero-title span {
+  display: block;
+
+  margin-top: 1rem;
+
+  background:
+    linear-gradient(
+      135deg,
+      #6b0000,
+      #8b0000,
+      #dc2626
+    );
+
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* GLOW */
+
+.hero-title::after {
+  content: '';
+
+  position: absolute;
+
+  width: 500px;
+  height: 140px;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(220,38,38,.08),
+      transparent 70%
+    );
+
+  filter: blur(70px);
+
+  z-index: -1;
+}
+
+/* ───────────────── DESCRIPCION ───────────────── */
+
+.hero-description {
+  max-width: 760px;
+
+  color: #6b7280;
+
+  font-size: 1.1rem;
+
+  line-height: 1.9;
+
+  font-weight: 500;
+
+  animation:
+    fadeUp 1s .3s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.hero-description strong {
+  color: #8b0000;
+  font-weight: 800;
+}
+
+/* ───────────────── BOTONES ───────────────── */
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  gap: 1rem;
+
+  margin-top: 3rem;
+
+  animation:
+    fadeUp 1s .45s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.hero-btn {
+  position: relative;
+
+  overflow: hidden;
+
+  padding: 1rem 2rem;
+
+  border-radius: 18px;
+
+  text-decoration: none;
+
+  font-weight: 800;
+
+  transition: all .35s ease;
+}
+
+/* BOTON PRINCIPAL */
+
+.hero-btn.primary {
+  background:
+    linear-gradient(
+      135deg,
+      #6b0000,
+      #8b0000,
+      #dc2626
+    );
+
+  color: white;
+
+  box-shadow:
+    0 18px 40px rgba(139,0,0,.2);
+}
+
+.hero-btn.primary:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 28px 60px rgba(139,0,0,.24);
+}
+
+/* BOTON SECUNDARIO */
+
+.hero-btn.secondary {
+  background: rgba(255,255,255,.92);
+
+  color: #8b0000;
+
+  border: 1px solid rgba(139,0,0,.08);
+
+  backdrop-filter: blur(14px);
+
+  box-shadow:
+    0 12px 25px rgba(0,0,0,.04);
+}
+
+.hero-btn.secondary:hover {
+  transform: translateY(-5px);
+
+  background: white;
+}
+
+/* ───────────────── STATS ───────────────── */
+
+.hero-stats {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(280px, 1fr));
+
+  gap: 2rem;
+
+  margin-top: 5rem;
+
+  animation:
+    fadeUp 1s .6s cubic-bezier(.2,.8,.2,1) both;
+}
+
+/* CARD */
+
+.hero-stat-card {
+  position: relative;
+
+  overflow: hidden;
+
+  padding: 2.6rem;
+
+  border-radius: 38px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.96),
+      rgba(255,255,255,.88)
+    );
+
+  border: 1px solid rgba(255,255,255,.8);
+
+  backdrop-filter: blur(18px);
+
+  transition: all .4s ease;
+
+  box-shadow:
+    0 25px 60px rgba(0,0,0,.06);
+}
+
+/* TOP RED LINE */
+
+.hero-stat-card::before {
+  content: '';
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 7px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #5D0E0E,
+      #5D0E0E
+    );
+}
+
+/* HOVER */
+
+.hero-stat-card:hover {
+  transform: translateY(-10px);
+
+  box-shadow:
+    0 35px 80px rgba(139,0,0,.12);
+}
+
+.hero-stat-card h3 {
+  font-size: 3rem;
+
+  font-weight: 950;
+
+  margin-bottom: .7rem;
+
+  line-height: 1;
+
+  background:
+    linear-gradient(
+      135deg,
+      #5D0E0E,
+      #5D0E0E
+    );
+
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-stat-card p {
+  color: #6b7280;
+
+  font-weight: 600;
+
+  line-height: 1.7;
+}
+
+/* ───────────────── BADGES ───────────────── */
+
+.super-badges {
+  margin-top: 4rem;
+
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  gap: 1rem;
+
+  animation:
+    fadeUp 1s .75s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.super-badge {
+  padding: 1rem 1.8rem;
+
+  border-radius: 999px;
+
+  text-decoration: none;
+
+  background: rgba(255,255,255,.92);
+
+  color: #5D0E0E;
+
+  font-weight: 800;
+
+  border: 1px solid rgba(139,0,0,.08);
+
+  backdrop-filter: blur(14px);
+
+  transition: all .35s ease;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,.04);
+}
+
+.super-badge:hover {
+  transform: translateY(-4px);
+
+  background:
+    linear-gradient(
+      135deg,
+      #5D0E0E,
+      #5D0E0E
+    );
+
+  color: white;
+
+  box-shadow:
+    0 20px 40px rgba(139,0,0,.18);
+}
+
+/* ───────────────── ANIMACIONES ───────────────── */
+
+@keyframes floatGlow {
+  0%,100% {
+    transform: translateY(0px) translateX(0px);
+  }
+
+  50% {
+    transform: translateY(30px) translateX(25px);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ───────────────── RESPONSIVE ───────────────── */
+
+@media (max-width: 950px) {
+
+  .hero {
+    padding: 6rem 1.3rem 4rem;
+  }
+
+  .hero-title {
+    font-size: clamp(3rem, 13vw, 5rem);
+  }
+
+  .hero-description {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-btn {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .hero-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-stat-card {
+    padding: 2rem;
+  }
+
+  .super-badge {
+    width: 100%;
+    text-align: center;
+  }
+}
